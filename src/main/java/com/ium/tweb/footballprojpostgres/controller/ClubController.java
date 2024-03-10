@@ -26,9 +26,6 @@ public class ClubController {
             List<Club> clubs = clubService.getAllClubs();
             return ResponseEntity.ok(clubs);
         }
-        catch (ClubNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
         catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -52,9 +49,6 @@ public class ClubController {
         try {
             List<Club> clubs = clubService.getClubsByDomesticCompetitionId(domesticCompetitionId);
             return ResponseEntity.ok(clubs);
-        }
-        catch (ClubNotFoundException e) {
-            return ResponseEntity.notFound().build();
         }
         catch (Exception e) {
             return ResponseEntity.internalServerError().build();

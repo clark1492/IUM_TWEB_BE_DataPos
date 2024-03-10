@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PlayerServiceImpl implements PlayerService {
     private static final Logger logger = LoggerFactory.getLogger(PlayerServiceImpl.class);
@@ -16,6 +18,12 @@ public class PlayerServiceImpl implements PlayerService {
     /* Using constructor injection */
     public PlayerServiceImpl(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
+    }
+
+    @Override
+    public List<Player> getAllPlayers() {
+        List<Player> players = playerRepository.findAll();
+        return players;
     }
 
     @Override

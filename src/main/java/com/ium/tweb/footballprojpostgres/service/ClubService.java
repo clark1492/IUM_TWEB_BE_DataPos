@@ -14,7 +14,7 @@ public interface ClubService {
      * Get all clubs.
      * @return List of all clubs.
      */
-    List<Club> getAllClubs() throws ClubNotFoundException;
+    List<Club> getAllClubs();
 
     /**
      * Get club by ID.
@@ -28,6 +28,6 @@ public interface ClubService {
      * @param domesticCompetitionId ID of the domestic competition.
      * @return List of clubs in the given domestic competition.
      */
-    List<Club> getClubsByDomesticCompetitionId(String domesticCompetitionId) throws ClubNotFoundException;
+    List<Club> getClubsByDomesticCompetitionId(String domesticCompetitionId);
 
 }
