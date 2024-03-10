@@ -1,6 +1,8 @@
 package com.ium.tweb.footballprojpostgres.service.impl;
 
 import com.ium.tweb.footballprojpostgres.data.model.Club;
+import com.ium.tweb.footballprojpostgres.exception.ClubException;
+import com.ium.tweb.footballprojpostgres.exception.ClubNotFoundException;
 import com.ium.tweb.footballprojpostgres.repository.ClubRepository;
 import com.ium.tweb.footballprojpostgres.service.ClubService;
 import org.springframework.stereotype.Service;
@@ -17,18 +19,32 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public List<Club> getAllClubs() {
-        return clubRepository.findAll();
+    public List<Club> getAllClubs() throws ClubNotFoundException {
+        List<Club> clubs = clubRepository.findAll();
+        if (clubs.isEmpty()) {
+            throw new ClubNotFoundException("No clubs found");
+        } else {
+            return clubs;
+        }
     }
 
     @Override
-    public Club getClubById(Integer clubId) {
-        return clubRepository.findById(clubId).orElse(null);
+    public Club getClubById(Integer clubId)  throws ClubNotFoundException{
+        Club club = clubRepository.findByClubId(clubId);
+        if (club == null) {
+            throw new ClubNotFoundException("Club with id " + clubId + " not found");
+        }
+        return club;
     }
 
     @Override
-    public List<Club> getClubsByDomesticCompetitionId(String domesticCompetitionId) {
-        return clubRepository.findByDomesticCompetitionId(domesticCompetitionId);
+    public List<Club> getClubsByDomesticCompetitionId(String domesticCompetitionId) throws ClubNotFoundException {
+        List<Club> clubs = clubRepository.findByDomesticCompetitionId(domesticCompetitionId);
+        if (clubs.isEmpty()) {
+            throw new ClubNotFoundException("No clubs found for domestic competition with id " + domesticCompetitionId);
+        } else {
+            return clubs;
+        }
     }
 
 }

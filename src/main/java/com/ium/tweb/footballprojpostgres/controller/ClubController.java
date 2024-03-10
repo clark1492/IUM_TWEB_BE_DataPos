@@ -1,7 +1,9 @@
 package com.ium.tweb.footballprojpostgres.controller;
 
 import com.ium.tweb.footballprojpostgres.data.model.Club;
+import com.ium.tweb.footballprojpostgres.exception.ClubNotFoundException;
 import com.ium.tweb.footballprojpostgres.service.ClubService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,18 +21,44 @@ public class ClubController {
     }
 
     @GetMapping
-    public List<Club> getAllClubs() {
-        return clubService.getAllClubs();
+    public ResponseEntity<List<Club>> getAllClubs() {
+        try {
+            List<Club> clubs = clubService.getAllClubs();
+            return ResponseEntity.ok(clubs);
+        }
+        catch (ClubNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/{clubId}")
-    public Club getClubById(@PathVariable Integer clubId) {
-        return clubService.getClubById(clubId);
+    public ResponseEntity<Club> getClubById(@PathVariable Integer clubId) {
+        try {
+            return ResponseEntity.ok(clubService.getClubById(clubId));
+        }
+        catch (ClubNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/competition/{domesticCompetitionId}")
-    public List<Club> getClubsByDomesticCompetitionId(@PathVariable String domesticCompetitionId) {
-        return clubService.getClubsByDomesticCompetitionId(domesticCompetitionId);
+    public ResponseEntity<List<Club>> getClubsByDomesticCompetitionId(@PathVariable String domesticCompetitionId) {
+        try {
+            List<Club> clubs = clubService.getClubsByDomesticCompetitionId(domesticCompetitionId);
+            return ResponseEntity.ok(clubs);
+        }
+        catch (ClubNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
 }
