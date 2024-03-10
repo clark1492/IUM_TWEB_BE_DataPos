@@ -267,6 +267,35 @@ public class Player {
 
     // Constructors
 
+    public Player() {
+    }
+
+    public Player(Integer playerId, String firstName, String lastName, String name, Integer lastSeason, Integer currentClubId, String playerCode, String countryOfBirth, String cityOfBirth, String countryOfCitizenship, Date dateOfBirth, String subPosition, String position, String foot, Integer heightInCm, Integer marketValueInEur, Integer highestMarketValueInEur, Date contractExpirationDate, String agentName, String imageUrl, String url, String currentClubDomesticCompetitionId, String currentClubName) {
+        this.playerId = playerId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.name = name;
+        this.lastSeason = lastSeason;
+        this.currentClubId = currentClubId;
+        this.playerCode = playerCode;
+        this.countryOfBirth = countryOfBirth;
+        this.cityOfBirth = cityOfBirth;
+        this.countryOfCitizenship = countryOfCitizenship;
+        this.dateOfBirth = dateOfBirth;
+        this.subPosition = subPosition;
+        this.position = position;
+        this.foot = foot;
+        this.heightInCm = heightInCm;
+        this.marketValueInEur = marketValueInEur;
+        this.highestMarketValueInEur = highestMarketValueInEur;
+        this.contractExpirationDate = contractExpirationDate;
+        this.agentName = agentName;
+        this.imageUrl = imageUrl;
+        this.url = url;
+        this.currentClubDomesticCompetitionId = currentClubDomesticCompetitionId;
+        this.currentClubName = currentClubName;
+    }
+
     // toString() method
 
     @Override

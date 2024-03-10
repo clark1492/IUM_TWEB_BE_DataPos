@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/rest/player")  /* Use request mapping for versioning */
-/*@CrossOrigin(origins = "*")*/
-/*https://spring.io/guides/tutorials/rest*/
 public class PlayerController {
     private static final Logger logger = LoggerFactory.getLogger(PlayerController.class);
     private final PlayerService playerService;
@@ -20,7 +18,8 @@ public class PlayerController {
         this.playerService = playerService;
     }
 
-    @GetMapping("/{id}")//, produces = "application/json"
+
+    @GetMapping("/{id}")
     public ResponseEntity<Player> getPlayerById(@PathVariable("id") int playerId) {
         try {
             Player player = playerService.getPlayer(playerId);
@@ -31,4 +30,7 @@ public class PlayerController {
         }
     }
 }
+
+/*https://spring.io/guides/tutorials/rest*/
+
 
