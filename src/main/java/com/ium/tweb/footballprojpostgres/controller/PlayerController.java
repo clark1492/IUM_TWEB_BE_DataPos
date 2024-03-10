@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1")  /* Use request mapping for versioning */
+@RequestMapping("/v1/rest/player")  /* Use request mapping for versioning */
 /*@CrossOrigin(origins = "*")*/
 /*https://spring.io/guides/tutorials/rest*/
 public class PlayerController {
@@ -20,7 +20,7 @@ public class PlayerController {
         this.playerService = playerService;
     }
 
-    @GetMapping("/rest/player/{id}")//, produces = "application/json"
+    @GetMapping("/{id}")//, produces = "application/json"
     public ResponseEntity<Player> getPlayerById(@PathVariable("id") int playerId) {
         try {
             Player player = playerService.getPlayer(playerId);
