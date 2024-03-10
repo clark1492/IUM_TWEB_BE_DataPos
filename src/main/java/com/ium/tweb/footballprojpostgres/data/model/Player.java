@@ -327,6 +327,4 @@ public class Player {
                 '}';
     }
 
-    // Other methods ?
-
 }
