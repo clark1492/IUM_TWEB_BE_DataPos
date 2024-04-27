@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 public class PlayerValuationServiceImpl implements PlayerValuationService {
 
+
     private final PlayerValuationRepository playerValuationRepository;
 
     public PlayerValuationServiceImpl(PlayerValuationRepository playerValuationRepository) {
@@ -19,13 +20,20 @@ public class PlayerValuationServiceImpl implements PlayerValuationService {
     }
 
     @Override
-    public List<PlayerValuation> getPlayerValuationsByPlayerId(Integer playerId) {
-        return playerValuationRepository.findPlayerValuationByIdPlayerId(playerId);
+    public List<PlayerValuation> getAllPlayerValuations() {
+        return playerValuationRepository.findAll();
     }
 
     @Override
+    public List<PlayerValuation> getPlayerValuationsByPlayerId(Integer playerId) {
+        return playerValuationRepository.findByIdPlayerId(playerId);
+    }
+
+
+
+    @Override
     public PlayerValuation getPlayerValuationsByPlayerIdAndDate(Integer playerId, Date date) throws PlayerValuationNotFoundException {
-        PlayerValuation playerValuation = playerValuationRepository.findPlayerValuationByIdPlayerIdAndIdDate(playerId, date);
+        PlayerValuation playerValuation = playerValuationRepository.findByIdPlayerIdAndIdDate(playerId, date);
         if (playerValuation == null) {
             throw new PlayerValuationNotFoundException("Player valuation not found for player ID: " + playerId + " and date: " + date);
         } else {
@@ -35,7 +43,7 @@ public class PlayerValuationServiceImpl implements PlayerValuationService {
 
     @Override
     public List<PlayerValuation> getPlayerValuationsByClubId(Integer clubId) {
-       return playerValuationRepository.findPlayerValuationByCurrentClubId(clubId);
+       return playerValuationRepository.findByCurrentClubId(clubId);
     }
 
 }

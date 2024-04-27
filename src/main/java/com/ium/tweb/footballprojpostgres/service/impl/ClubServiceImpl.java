@@ -1,7 +1,6 @@
 package com.ium.tweb.footballprojpostgres.service.impl;
 
 import com.ium.tweb.footballprojpostgres.data.model.Club;
-import com.ium.tweb.footballprojpostgres.exception.ClubException;
 import com.ium.tweb.footballprojpostgres.exception.ClubNotFoundException;
 import com.ium.tweb.footballprojpostgres.repository.ClubRepository;
 import com.ium.tweb.footballprojpostgres.service.ClubService;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @Service
 public class ClubServiceImpl implements ClubService {
-    private static final Logger logger = LoggerFactory.getLogger(PlayerServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClubServiceImpl.class);
     private final ClubRepository clubRepository;
 
     public ClubServiceImpl(ClubRepository clubRepository) {

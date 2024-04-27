@@ -2,9 +2,13 @@ package com.ium.tweb.footballprojpostgres.repository;
 
 import com.ium.tweb.footballprojpostgres.data.model.Competition;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+@Repository
 public interface CompetitionRepository extends JpaRepository<Competition, String> {
+
+    List<Competition> findAll();
 
     Competition findByCompetitionId(String competitionId);
     List<Competition> findByType(String type);

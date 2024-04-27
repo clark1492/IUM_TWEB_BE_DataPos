@@ -1,7 +1,7 @@
 package com.ium.tweb.footballprojpostgres.service.impl;
 
 import com.ium.tweb.footballprojpostgres.data.model.Player;
-import com.ium.tweb.footballprojpostgres.exception.PlayerException;
+import com.ium.tweb.footballprojpostgres.exception.PlayerNotFoundException;
 import com.ium.tweb.footballprojpostgres.repository.PlayerRepository;
 import com.ium.tweb.footballprojpostgres.service.PlayerService;
 import org.slf4j.Logger;
@@ -22,19 +22,23 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public List<Player> getAllPlayers() {
-        List<Player> players = playerRepository.findAll();
-        return players;
+        return playerRepository.findAll();
     }
 
     @Override
-    public Player getPlayer(Integer playerId) throws PlayerException {
-        Player player = playerRepository.getPlayerByPlayerId(playerId);
+    public Player getPlayerById(Integer playerId) throws PlayerNotFoundException {
+        Player player = playerRepository.findByPlayerId(playerId);
         if (player == null) {
             logger.error(String.format("Not Existing Player (playerId = %d)", playerId));
-            throw new PlayerException("Not Existing Player");
+            throw new PlayerNotFoundException("Not Existing Player");
         } else {
             return player;
         }
+    }
+
+    @Override
+    public List<Player> getPlayerByCurrentClubId(Integer currentClubId){
+       return playerRepository.findByCurrentClubId(currentClubId);
     }
 
 }

@@ -3,6 +3,8 @@ package com.ium.tweb.footballprojpostgres.controller;
 import com.ium.tweb.footballprojpostgres.data.model.Competition;
 import com.ium.tweb.footballprojpostgres.exception.CompetitionNotFoundException;
 import com.ium.tweb.footballprojpostgres.service.CompetitionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,8 @@ public class CompetitionController {
     @Autowired
     private CompetitionService competitionService;
 
+    private static final Logger logger = LoggerFactory.getLogger(CompetitionController.class);
+
     @GetMapping
     public List<Competition> getAllCompetitions() {
         return competitionService.getAllCompetitions();
@@ -29,6 +33,7 @@ public class CompetitionController {
             Competition competition = competitionService.getCompetitionById(competitionId);
             return ResponseEntity.ok(competition);
         } catch (CompetitionNotFoundException e) {
+            logger.error(e.getMessage());
             return ResponseEntity.notFound().build();
         }
     }

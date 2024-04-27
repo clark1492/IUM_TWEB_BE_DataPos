@@ -27,7 +27,7 @@ public class CompetitionServiceImpl implements CompetitionService {
 
     @Override
     public Competition getCompetitionById(String competitionId) throws CompetitionNotFoundException {
-        Competition competition = competitionRepository.findById(competitionId).orElse(null);
+        Competition competition = competitionRepository.findByCompetitionId(competitionId);
         if (competition == null) {
             String error = String.format("Competition with ID %s not found", competitionId);
             logger.error(error);

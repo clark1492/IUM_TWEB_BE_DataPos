@@ -1,7 +1,6 @@
 package com.ium.tweb.footballprojpostgres.service;
 
 import com.ium.tweb.footballprojpostgres.data.model.Club;
-import com.ium.tweb.footballprojpostgres.exception.ClubException;
 import com.ium.tweb.footballprojpostgres.exception.ClubNotFoundException;
 
 import java.util.List;
