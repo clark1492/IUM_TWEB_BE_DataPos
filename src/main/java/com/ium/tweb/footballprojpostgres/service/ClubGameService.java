@@ -27,6 +27,22 @@ public interface ClubGameService {
     ClubGame getClubGamesByGameIdAndClubId(Integer gameId, Integer clubId) throws ClubGameNotFoundException;
 
     /**
+     * Delete club games by game ID and club ID.
+     * @param gameId ID of the game.
+     * @param clubId ID of the club.
+     * @return Club game that was deleted.
+     */
+    ClubGame deleteClubGamesByGameIdAndClubId(Integer gameId, Integer clubId) throws ClubGameNotFoundException;
+
+    /**
+     * Update club games by game ID and club ID.
+     * @param gameId ID of the game.
+     * @param clubId ID of the club.
+     * @return Club game that was updated.
+     */
+    ClubGame updateClubGamesByGameIdAndClubId(Integer gameId, Integer clubId, ClubGame clubGame) throws ClubGameNotFoundException;
+
+    /**
      * Get club games by club ID.
      * @param clubId ID of the club.
      * @return List of club games with the given club ID.

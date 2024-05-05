@@ -120,6 +120,9 @@ public class ClubGame {
         this.win = win;
     }
 
+    public boolean getWin() {
+        return win;
+    }
 
     // Constructors
 

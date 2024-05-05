@@ -45,6 +45,32 @@ public class ClubGameServiceImpl implements ClubGameService {
     }
 
     @Override
+    public ClubGame deleteClubGamesByGameIdAndClubId(Integer gameId, Integer clubId) throws ClubGameNotFoundException {
+        ClubGame clubGame = getClubGamesByGameIdAndClubId(gameId, clubId);
+        clubGameRepository.delete(clubGame);
+        return clubGame;
+    }
+
+    @Override
+    public ClubGame updateClubGamesByGameIdAndClubId(Integer gameId, Integer clubId, ClubGame clubGame) throws ClubGameNotFoundException {
+        ClubGame oldClubGame = getClubGamesByGameIdAndClubId(gameId, clubId);
+        oldClubGame.setId(clubGame.getId());
+        oldClubGame.setHosting(clubGame.getHosting());
+        oldClubGame.setOpponentGoals(clubGame.getOpponentGoals());
+        oldClubGame.setOpponentManagerName(clubGame.getOpponentManagerName());
+        oldClubGame.setOwnGoals(clubGame.getOwnGoals());
+        oldClubGame.setOpponentPosition(clubGame.getOpponentPosition());
+        oldClubGame.setOwnManagerName(clubGame.getOwnManagerName());
+        oldClubGame.setOwnPosition(clubGame.getOwnPosition());
+        oldClubGame.setWin(clubGame.getWin());
+        oldClubGame.setOpponentId(clubGame.getOpponentId());
+
+        clubGameRepository.save(clubGame);
+        return clubGame;
+    }
+
+
+    @Override
     public List<ClubGame> getClubGamesByClubId(Integer clubId) {
         return clubGameRepository.findByIdClubId(clubId);
     }

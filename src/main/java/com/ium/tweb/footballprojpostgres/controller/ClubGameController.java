@@ -6,10 +6,8 @@ import com.ium.tweb.footballprojpostgres.service.ClubGameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -37,10 +35,32 @@ public class ClubGameController {
     }
 
     @GetMapping("/game/{gameId}/club/{clubId}")
-    public ResponseEntity<ClubGame> getClubGamesByGameId(@PathVariable Integer gameId, @PathVariable Integer clubId) {
+    public ResponseEntity<ClubGame> getClubGamesByGameIdAndClubId(@PathVariable Integer gameId, @PathVariable Integer clubId) {
         try {
             ClubGame clubGame = clubGameService.getClubGamesByGameIdAndClubId(gameId, clubId);
             return ResponseEntity.ok(clubGame);
+        } catch (ClubGameNotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/game/{gameId}/club/{clubId}")
+    public ResponseEntity<ClubGame> deleteClubGamesByGameIdAndClubId(@PathVariable Integer gameId, @PathVariable Integer clubId) {
+        try {
+            ClubGame clubGame = clubGameService.deleteClubGamesByGameIdAndClubId(gameId, clubId);
+            return ResponseEntity.ok(clubGame);
+        } catch (ClubGameNotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/game/{gameId}/club/{clubId}")
+    public ResponseEntity<ClubGame> updateClubGamesByGameIdAndClubId(@PathVariable Integer gameId, @PathVariable Integer clubId, @RequestBody ClubGame clubGame) {
+        try {
+            ClubGame updatedClubGame = clubGameService.updateClubGamesByGameIdAndClubId(gameId, clubId, clubGame);
+            return ResponseEntity.ok(updatedClubGame);
         } catch (ClubGameNotFoundException e) {
             logger.error(e.getMessage());
             return ResponseEntity.notFound().build();
