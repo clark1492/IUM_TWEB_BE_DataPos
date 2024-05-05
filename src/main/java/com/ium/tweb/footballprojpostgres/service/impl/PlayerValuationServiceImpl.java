@@ -6,6 +6,7 @@ import com.ium.tweb.footballprojpostgres.repository.PlayerValuationRepository;
 import com.ium.tweb.footballprojpostgres.service.PlayerValuationService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -32,12 +33,42 @@ public class PlayerValuationServiceImpl implements PlayerValuationService {
 
 
     @Override
-    public PlayerValuation getPlayerValuationsByPlayerIdAndDate(Integer playerId, Date date) throws PlayerValuationNotFoundException {
+    public PlayerValuation getPlayerValuationsByPlayerIdAndDate(Integer playerId, LocalDate date) throws PlayerValuationNotFoundException {
         PlayerValuation playerValuation = playerValuationRepository.findByIdPlayerIdAndIdDate(playerId, date);
         if (playerValuation == null) {
             throw new PlayerValuationNotFoundException("Player valuation not found for player ID: " + playerId + " and date: " + date);
         } else {
             return playerValuation;
+        }
+    }
+
+    @Override
+    public PlayerValuation deletePlayerValuationsByPlayerIdAndDate(Integer playerId, LocalDate date) throws PlayerValuationNotFoundException {
+        PlayerValuation playerValuation = playerValuationRepository.findByIdPlayerIdAndIdDate(playerId, date);
+        if (playerValuation == null) {
+            throw new PlayerValuationNotFoundException("Player valuation not found for player ID: " + playerId + " and date: " + date);
+        } else {
+            playerValuationRepository.delete(playerValuation);
+            return playerValuation;
+        }
+    }
+
+    @Override
+    public PlayerValuation updatePlayerValuationsByPlayerIdAndDate(Integer playerId, LocalDate date, PlayerValuation playerValuation) throws PlayerValuationNotFoundException {
+        PlayerValuation playerValuationToUpdate = playerValuationRepository.findByIdPlayerIdAndIdDate(playerId, date);
+        if (playerValuationToUpdate == null) {
+            throw new PlayerValuationNotFoundException("Player valuation not found for player ID: " + playerId + " and date: " + date);
+        } else {
+            playerValuationToUpdate.setLastSeason(playerValuation.getLastSeason());
+            playerValuationToUpdate.setDatetime(playerValuation.getDatetime());
+            playerValuationToUpdate.setDateWeek(playerValuation.getDateWeek());
+            playerValuationToUpdate.setMarketValueInEur(playerValuation.getMarketValueInEur());
+            playerValuationToUpdate.setN(playerValuation.getN());
+            playerValuationToUpdate.setCurrentClubId(playerValuation.getCurrentClubId());
+            playerValuationToUpdate.setPlayerClubDomesticCompetitionId(playerValuation.getPlayerClubDomesticCompetitionId());
+
+            playerValuationRepository.save(playerValuationToUpdate);
+            return playerValuationToUpdate;
         }
     }
 

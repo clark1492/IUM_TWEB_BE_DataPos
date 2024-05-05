@@ -3,6 +3,7 @@ package com.ium.tweb.footballprojpostgres.service;
 import com.ium.tweb.footballprojpostgres.data.model.PlayerValuation;
 import com.ium.tweb.footballprojpostgres.exception.PlayerValuationNotFoundException;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,23 @@ public interface PlayerValuationService {
      * @param date date of the player valuation.
      * @return Player valuation with the given ID and date.
      */
-    PlayerValuation getPlayerValuationsByPlayerIdAndDate(Integer playerId, Date date) throws PlayerValuationNotFoundException;
+    PlayerValuation getPlayerValuationsByPlayerIdAndDate(Integer playerId, LocalDate date) throws PlayerValuationNotFoundException;
+
+    /**
+     * Delete player valuation by ID.
+     * @param playerId ID of the player.
+     * @param date date of the player valuation.
+     * @return Player valuation that was deleted.
+     */
+    PlayerValuation deletePlayerValuationsByPlayerIdAndDate(Integer playerId, LocalDate date) throws PlayerValuationNotFoundException;
+
+    /**
+     * Update player valuation by ID.
+     * @param playerId ID of the player.
+     * @param date date of the player valuation.
+     * @return Player valuation that was updated.
+     */
+    PlayerValuation updatePlayerValuationsByPlayerIdAndDate(Integer playerId, LocalDate date, PlayerValuation playerValuation) throws PlayerValuationNotFoundException;
 
     /**
      * Get player valuations by player ID.
