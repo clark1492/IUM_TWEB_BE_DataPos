@@ -50,5 +50,21 @@ public interface PlayerValuationService {
      * @return List of player valuations with the given ID.
      */
     List<PlayerValuation> getPlayerValuationsByClubId(Integer clubId);
+
+    /**
+     * Get all player valuations with pagination.
+     * @param pageSize Number of player valuations per page.
+     * @param pageNumber Page number.
+     * @return List of all player valuations with pagination.
+     */
+    List<PlayerValuation> getAllPlayerValuationsWithPagination(Integer pageSize, Integer pageNumber);
+
+
+    /**
+     * Create a new player valuation.
+     * @param playerValuation Player valuation to create.
+     * @return Created player valuation.
+     */
+    PlayerValuation createPlayerValuation(PlayerValuation playerValuation) throws PlayerValuationNotFoundException;
 }
 

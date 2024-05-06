@@ -4,10 +4,11 @@ import com.ium.tweb.footballprojpostgres.data.model.PlayerValuation;
 import com.ium.tweb.footballprojpostgres.exception.PlayerValuationNotFoundException;
 import com.ium.tweb.footballprojpostgres.repository.PlayerValuationRepository;
 import com.ium.tweb.footballprojpostgres.service.PlayerValuationService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -75,6 +76,17 @@ public class PlayerValuationServiceImpl implements PlayerValuationService {
     @Override
     public List<PlayerValuation> getPlayerValuationsByClubId(Integer clubId) {
        return playerValuationRepository.findByCurrentClubId(clubId);
+    }
+
+    @Override
+    public List<PlayerValuation> getAllPlayerValuationsWithPagination(Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        return playerValuationRepository.findAll(page).getContent();
+    }
+
+    @Override
+    public PlayerValuation createPlayerValuation(PlayerValuation playerValuation) throws PlayerValuationNotFoundException {
+        return playerValuationRepository.save(playerValuation);
     }
 
 }

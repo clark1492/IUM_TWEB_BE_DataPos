@@ -34,6 +34,19 @@ public class PlayerValuationController {
         }
     }
 
+    // Get all player valuations but with pagination (optional arguments: pageSize, pageNumber)
+    // If not set used default value (pageSize = 25, pageNumber = 0)
+    @GetMapping("/page")
+    public ResponseEntity<List<PlayerValuation>> getAllPlayerValuationsWithPagination(@RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+        try {
+            List<PlayerValuation> playerValuations = playerValuationService.getAllPlayerValuationsWithPagination(pageSize, pageNumber);
+            return ResponseEntity.ok(playerValuations);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @GetMapping("/player/{playerId}")
     public ResponseEntity<List<PlayerValuation>> getPlayerValuationsByPlayerId(@PathVariable Integer playerId) {
         try {
@@ -79,6 +92,15 @@ public class PlayerValuationController {
             logger.error(e.getMessage());
             return ResponseEntity.notFound().build();
 
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<PlayerValuation> createPlayerValuation(@RequestBody PlayerValuation playerValuation) {
+        try {
+            return ResponseEntity.ok(playerValuationService.createPlayerValuation(playerValuation));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 
