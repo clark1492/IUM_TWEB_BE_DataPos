@@ -13,6 +13,15 @@ public interface PlayerService {
     List<Player> getAllPlayers();
 
     /**
+     * Get all players with pagination.
+     * @param pageSize Number of players per page.
+     * @param pageNumber Page number.
+     * @return List of all players with pagination.
+     */
+    List<Player> getAllPlayersWithPagination(Integer pageSize, Integer pageNumber);
+
+
+    /**
      * Get player by ID.
      * @param playerId ID of the player.
      * @return Player with the given ID.
@@ -26,4 +35,26 @@ public interface PlayerService {
      */
     List<Player> getPlayerByCurrentClubId(Integer currentClubId);
 
+
+    /**
+     * Create a new player.
+     * @param player Player to create.
+     * @return Created player.
+     */
+    Player createPlayer(Player player);
+
+    /**
+     * Update a player.
+     * @param playerId ID of the player to update.
+     * @param player New player data.
+     * @return Updated player.
+     */
+    Player updatePlayer(Integer playerId, Player player) throws PlayerNotFoundException;
+
+    /**
+     * Delete a player.
+     * @param playerId ID of the player to delete.
+     * @return Deleted player.
+     */
+    Player deletePlayer(Integer playerId) throws PlayerNotFoundException;
 }

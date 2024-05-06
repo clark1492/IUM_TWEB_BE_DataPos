@@ -6,6 +6,8 @@ import com.ium.tweb.footballprojpostgres.repository.PlayerRepository;
 import com.ium.tweb.footballprojpostgres.service.PlayerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,12 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    public List<Player> getAllPlayersWithPagination(Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        return playerRepository.findAll(page).getContent();
+    }
+
+    @Override
     public Player getPlayerById(Integer playerId) throws PlayerNotFoundException {
         Player player = playerRepository.findByPlayerId(playerId);
         if (player == null) {
@@ -39,6 +47,54 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<Player> getPlayerByCurrentClubId(Integer currentClubId){
        return playerRepository.findByCurrentClubId(currentClubId);
+    }
+
+    @Override
+    public Player createPlayer(Player player) {
+        return playerRepository.save(player);
+    }
+
+    @Override
+    public Player updatePlayer(Integer playerId, Player player) throws PlayerNotFoundException {
+        Player oldPlayer = getPlayerById(playerId);
+        if (oldPlayer == null) {
+            throw new PlayerNotFoundException("Player not found");
+        }
+        oldPlayer.setPlayerId(player.getPlayerId());
+        oldPlayer.setFirstName(player.getFirstName());
+        oldPlayer.setLastName(player.getLastName());
+        oldPlayer.setName(player.getName());
+        oldPlayer.setLastSeason(player.getLastSeason());
+        oldPlayer.setCurrentClubId(player.getCurrentClubId());
+        oldPlayer.setPlayerCode(player.getPlayerCode());
+        oldPlayer.setCountryOfBirth(player.getCountryOfBirth());
+        oldPlayer.setCityOfBirth(player.getCityOfBirth());
+        oldPlayer.setCountryOfCitizenship(player.getCountryOfCitizenship());
+        oldPlayer.setDateOfBirth(player.getDateOfBirth());
+        oldPlayer.setSubPosition(player.getSubPosition());
+        oldPlayer.setPosition(player.getPosition());
+        oldPlayer.setFoot(player.getFoot());
+        oldPlayer.setHeightInCm(player.getHeightInCm());
+        oldPlayer.setMarketValueInEur(player.getMarketValueInEur());
+        oldPlayer.setHighestMarketValueInEur(player.getHighestMarketValueInEur());
+        oldPlayer.setContractExpirationDate(player.getContractExpirationDate());
+        oldPlayer.setAgentName(player.getAgentName());
+        oldPlayer.setImageUrl(player.getImageUrl());
+        oldPlayer.setUrl(player.getUrl());
+        oldPlayer.setCurrentClubDomesticCompetitionId(player.getCurrentClubDomesticCompetitionId());
+        oldPlayer.setCurrentClubName(player.getCurrentClubName());
+        playerRepository.save(player);
+        return player;
+    }
+
+    @Override
+    public Player deletePlayer(Integer playerId) throws PlayerNotFoundException {
+        Player player = getPlayerById(playerId);
+        if (player == null) {
+            throw new PlayerNotFoundException("Player not found");
+        }
+        playerRepository.delete(player);
+        return player;
     }
 
 }

@@ -30,6 +30,51 @@ public class PlayerController {
         }
     }
 
+    // Get all players but with pagination (optional arguments: pageSize, pageNumber)
+    // If not set used default value (pageSize = 25, pageNumber = 0)
+    @GetMapping("/page")
+    public ResponseEntity<List<Player>> getAllPlayersWithPagination(@RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+        try {
+            List<Player> players = playerService.getAllPlayersWithPagination(pageSize, pageNumber);
+            return ResponseEntity.ok(players);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
+        try {
+            return ResponseEntity.ok(playerService.createPlayer(player));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PutMapping("/{playerId}")
+    public ResponseEntity<Player> updatePlayer(@PathVariable Integer playerId, @RequestBody Player player) {
+        try {
+            return ResponseEntity.ok(playerService.updatePlayer(playerId, player));
+        } catch (PlayerNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Player> deletePlayer(@PathVariable Integer playerId) {
+        try {
+            Player player = playerService.deletePlayer(playerId);
+            return ResponseEntity.ok(player);
+        } catch (PlayerNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Player> getPlayerById(@PathVariable("id") int playerId) {
         try {
@@ -42,7 +87,7 @@ public class PlayerController {
         }
     }
 
-    @GetMapping("/{currentClubId}")
+    @GetMapping("/club/{currentClubId}")
     public ResponseEntity<List<Player>> getPlayerByCurrentClubId(@PathVariable Integer currentClubId) {
         try {
             List<Player> players = playerService.getPlayerByCurrentClubId(currentClubId);
