@@ -54,5 +54,35 @@ public interface CompetitionService {
      * @return List of competitions in the given confederation.
      */
     List<Competition> getCompetitionsByConfederation(String confederation);
+
+    /**
+     * Get all competitions with pagination.
+     * @param pageSize Number of competitions per page.
+     * @param pageNumber Page number.
+     * @return List of all competitions with pagination.
+     */
+    List<Competition> getAllCompetitionsWithPagination(Integer pageSize, Integer pageNumber);
+
+    /**
+     * Create a new competition.
+     * @param competition Competition to create.
+     * @return Created competition.
+     */
+    Competition createCompetition(Competition competition);
+
+    /**
+     * Update competition by ID.
+     * @param competitionId ID of the competition.
+     * @param competition Competition to update.
+     * @return Competition that was updated.
+     */
+    Competition updateCompetition(String competitionId, Competition competition) throws CompetitionNotFoundException;
+
+    /**
+     * Delete competition by ID.
+     * @param competitionId ID of the competition.
+     * @return Competition that was updated.
+     */
+    Competition deleteCompetition(String competitionId) throws CompetitionNotFoundException;
 }
 
