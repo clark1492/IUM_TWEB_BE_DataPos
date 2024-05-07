@@ -6,6 +6,7 @@ import com.ium.tweb.footballprojpostgres.repository.ClubRepository;
 import com.ium.tweb.footballprojpostgres.service.ClubService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +41,51 @@ public class ClubServiceImpl implements ClubService {
     public List<Club> getClubsByDomesticCompetitionId(String domesticCompetitionId) {
         List<Club> clubs = clubRepository.findByDomesticCompetitionId(domesticCompetitionId);
         return clubs;
+    }
+
+    @Override
+    public List<Club> getAllClubsWithPagination(Integer pageSize, Integer pageNumber) {
+        return clubRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
+    }
+
+    @Override
+    public Club createClub(Club club) {
+        return clubRepository.save(club);
+    }
+
+    @Override
+    public Club deleteClub(Integer clubId) throws ClubNotFoundException {
+        Club club = clubRepository.findByClubId(clubId);
+        if(club == null) {
+            throw new ClubNotFoundException("Club not found");
+        }
+        clubRepository.delete(club);
+        return club;
+    }
+
+
+    @Override
+    public Club updateClub(Integer clubId, Club club) throws ClubNotFoundException {
+        Club clubToUpdate = clubRepository.findByClubId(clubId);
+        if (clubToUpdate == null) {
+            throw new ClubNotFoundException("Club not found");
+        }
+        clubToUpdate.setClubCode(club.getClubCode());
+        clubToUpdate.setName(club.getName());
+        clubToUpdate.setDomesticCompetitionId(club.getDomesticCompetitionId());
+        clubToUpdate.setTotalMarketValue(club.getTotalMarketValue());
+        clubToUpdate.setSquadSize(club.getSquadSize());
+        clubToUpdate.setAverageAge(club.getAverageAge());
+        clubToUpdate.setForeignersNumber(club.getForeignersNumber());
+        clubToUpdate.setForeignersPercentage(club.getForeignersPercentage());
+        clubToUpdate.setNationalTeamPlayers(club.getNationalTeamPlayers());
+        clubToUpdate.setStadiumName(club.getStadiumName());
+        clubToUpdate.setStadiumSeats(club.getStadiumSeats());
+        clubToUpdate.setNetTransferRecord(club.getNetTransferRecord());
+        clubToUpdate.setCoachName(club.getCoachName());
+        clubToUpdate.setLastSeason(club.getLastSeason());
+        clubToUpdate.setUrl(club.getUrl());
+        return clubRepository.save(clubToUpdate);
     }
 
 }

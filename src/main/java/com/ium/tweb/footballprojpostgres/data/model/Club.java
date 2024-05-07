@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Club {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) // to use this enable on database auto generated keys
     @Column(name = "club_id")
     private Integer clubId;
 

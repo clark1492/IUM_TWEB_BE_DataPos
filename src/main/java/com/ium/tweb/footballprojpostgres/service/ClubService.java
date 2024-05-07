@@ -29,4 +29,33 @@ public interface ClubService {
      */
     List<Club> getClubsByDomesticCompetitionId(String domesticCompetitionId);
 
+    /**
+     * Get all clubs with pagination.
+     * @param pageSize Number of clubs per page.
+     * @param pageNumber Page number.
+     * @return List of clubs in the given page.
+     */
+    List<Club> getAllClubsWithPagination(Integer pageSize, Integer pageNumber);
+
+    /**
+     * Create a new club.
+     * @param club Club to create.
+     * @return Created club.
+     */
+    Club createClub(Club club);
+
+    /**
+     * Delete club by ID.
+     * @param clubId ID of the club.
+     * @return Club that was deleted.
+     */
+    Club deleteClub(Integer clubId) throws ClubNotFoundException;
+
+    /**
+     * Update club by ID.
+     * @param clubId ID of the club.
+     * @param club Club to update.
+     * @return Club that was updated.
+     */
+    Club updateClub(Integer clubId, Club club) throws ClubNotFoundException;
 }
