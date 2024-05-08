@@ -28,6 +28,19 @@ public class ClubGameController {
         return result;
     }
 
+    // Get all club games but with pagination (optional arguments: pageSize, pageNumber)
+    // If not set used default value (pageSize = 25, pageNumber = 0)
+    @GetMapping("/page")
+    public ResponseEntity<List<ClubGame>> getAllClubGamesWithPagination(@RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+        try {
+            List<ClubGame> clubGames = clubGameService.getAllClubGamesWithPagination(pageSize, pageNumber);
+            return ResponseEntity.ok(clubGames);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @GetMapping("/game/{gameId}")
     public List<ClubGame> getClubGamesByGameId(@PathVariable Integer gameId) {
         List<ClubGame> result =  clubGameService.getClubGamesByGameId(gameId);
@@ -64,6 +77,16 @@ public class ClubGameController {
         } catch (ClubGameNotFoundException e) {
             logger.error(e.getMessage());
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<ClubGame> createClubGame(@RequestBody ClubGame clubGame) {
+        try {
+            ClubGame newClubGame = clubGameService.createClubGame(clubGame);
+            return ResponseEntity.ok(newClubGame);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 

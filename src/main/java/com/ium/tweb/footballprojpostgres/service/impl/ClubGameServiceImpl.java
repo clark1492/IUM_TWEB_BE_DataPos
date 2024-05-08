@@ -6,6 +6,8 @@ import com.ium.tweb.footballprojpostgres.repository.ClubGameRepository;
 import com.ium.tweb.footballprojpostgres.service.ClubGameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -83,6 +85,17 @@ public class ClubGameServiceImpl implements ClubGameService {
     @Override
     public List<ClubGame> getClubGamesByHosting(String hosting) {
         return clubGameRepository.findByHosting(hosting);
+    }
+
+    @Override
+    public List<ClubGame> getAllClubGamesWithPagination(Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        return clubGameRepository.findAll(page).getContent();
+    }
+
+    @Override
+    public ClubGame createClubGame(ClubGame clubGame) {
+        return clubGameRepository.save(clubGame);
     }
 
 }

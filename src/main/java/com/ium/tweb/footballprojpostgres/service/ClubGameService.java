@@ -62,5 +62,20 @@ public interface ClubGameService {
      * @return List of club games with the given hosting.
      */
     List<ClubGame> getClubGamesByHosting(String hosting);
+
+    /**
+     * Get all club games with pagination.
+     * @param pageSize Number of club games per page.
+     * @param pageNumber Page number.
+     * @return List of club games in the given page.
+     */
+    List<ClubGame> getAllClubGamesWithPagination(Integer pageSize, Integer pageNumber);
+
+    /**
+     * Create a new club game.
+     * @param clubGame Club game to create.
+     * @return Created club game.
+     */
+    ClubGame createClubGame(ClubGame clubGame);
 }
 
