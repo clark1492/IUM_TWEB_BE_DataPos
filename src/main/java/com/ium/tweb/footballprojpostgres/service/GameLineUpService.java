@@ -40,4 +40,27 @@ public interface GameLineUpService {
    */
   List<GameLineUp> getGameLineUpByPlayerId(Integer playerId);
 
+    List<GameLineUp> getAllGameLineUpsWithPagination(Integer pageSize, Integer pageNumber);
+
+    /**
+     * Create a new game lineup.
+     * @param gameLineUp Game lineup to create.
+     * @return Created game lineup.
+     */
+    GameLineUp createGameLineUp(GameLineUp gameLineUp);
+
+    /**
+     * Update a game lineup.
+     * @param gameLineUpId ID of the game lineup to update.
+     * @param gameLineUp New game lineup data.
+     * @return Updated game lineup.
+     */
+    GameLineUp updateGameLineUp(String gameLineUpId, GameLineUp gameLineUp) throws GameLineUpNotFoundException;
+
+    /**
+     * Delete a game lineup.
+     * @param gameLineUpId ID of the game lineup to delete.
+     * @return Deleted game lineup.
+     */
+    GameLineUp deleteGameLineUp(String gameLineUpId) throws GameLineUpNotFoundException;
 }

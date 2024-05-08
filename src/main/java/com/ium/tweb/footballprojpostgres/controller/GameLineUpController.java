@@ -6,8 +6,7 @@ import com.ium.tweb.footballprojpostgres.service.GameLineUpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +27,51 @@ public class GameLineUpController {
       return ResponseEntity.internalServerError().build();
     }
   }
+
+    // Get all game lineups but with pagination (optional arguments: pageSize, pageNumber)
+    // If not set used default value (pageSize = 25, pageNumber = 0)
+    @GetMapping("/page")
+    public ResponseEntity<List<GameLineUp>> getAllGameLineUpsWithPagination(@RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+        try {
+            List<GameLineUp> gameLineUps = gameLineUpService.getAllGameLineUpsWithPagination(pageSize, pageNumber);
+            return ResponseEntity.ok(gameLineUps);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<GameLineUp> createGameLineUp(@RequestBody GameLineUp gameLineUp) {
+        try {
+            return ResponseEntity.ok(gameLineUpService.createGameLineUp(gameLineUp));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PutMapping("/{gameLineUpId}")
+    public ResponseEntity<GameLineUp> updateGameLineUp(@PathVariable String gameLineUpId, @RequestBody GameLineUp gameLineUp) {
+        try {
+            return ResponseEntity.ok(gameLineUpService.updateGameLineUp(gameLineUpId, gameLineUp));
+        } catch (GameLineUpNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/{gameLineUpId}")
+    public ResponseEntity<GameLineUp> deleteGameLineUp(@PathVariable String gameLineUpId) {
+        try {
+            GameLineUp gameLineUp = gameLineUpService.deleteGameLineUp(gameLineUpId);
+            return ResponseEntity.ok(gameLineUp);
+        } catch (GameLineUpNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
   @GetMapping("/{gameLineUpId}")
   public ResponseEntity<GameLineUp> getGameLineUpById(@PathVariable String gameLineUpId){
