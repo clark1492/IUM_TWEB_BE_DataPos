@@ -15,4 +15,7 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
     List<Player> findByCurrentClubId(Integer currentClubId);
 
     List<Player> findByNameContaining(String name, Pageable pageable);
+
+    List<Player> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
 }
