@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/v1/rest/gameLineUps")
 public class GameLineUpController {
   private static final Logger logger = LoggerFactory.getLogger(GameLineUpController.class);
 
