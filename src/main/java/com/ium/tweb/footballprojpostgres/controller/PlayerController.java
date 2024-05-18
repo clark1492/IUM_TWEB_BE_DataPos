@@ -97,6 +97,16 @@ public class PlayerController {
         }
     }
 
+    @GetMapping("/search/name")
+    public ResponseEntity<List<Player>> searchPlayersByName(@RequestParam String name) {
+        try {
+            List<Player> players = playerService.searchPlayersByName(name);
+            return ResponseEntity.ok(players);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 
 }
 

@@ -97,4 +97,9 @@ public class PlayerServiceImpl implements PlayerService {
         return player;
     }
 
+    @Override
+    public List<Player> searchPlayersByName(String name) {
+        Pageable page = PageRequest.of(0, 10);
+        return playerRepository.findByNameContaining(name, page);
+    }
 }

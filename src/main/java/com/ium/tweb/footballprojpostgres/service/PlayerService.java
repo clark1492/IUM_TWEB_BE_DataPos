@@ -57,4 +57,12 @@ public interface PlayerService {
      * @return Deleted player.
      */
     Player deletePlayer(Integer playerId) throws PlayerNotFoundException;
+
+    // Search players by name
+    /**
+     * Search players by name.
+     * @param name Name of the player.
+     * @return List of players with the given name.
+     */
+    List<Player> searchPlayersByName(String name);
 }
