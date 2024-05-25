@@ -100,6 +100,6 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<Player> searchPlayersByName(String name) {
         Pageable page = PageRequest.of(0, 10);
-        return playerRepository.findByNameContainingIgnoreCase(name, page);
+        return playerRepository.findByNameContainingIgnoreCaseOrderByName(name, page);
     }
 }

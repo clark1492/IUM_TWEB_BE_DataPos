@@ -1,6 +1,7 @@
 package com.ium.tweb.footballprojpostgres.controller;
 
 import com.ium.tweb.footballprojpostgres.data.model.Club;
+import com.ium.tweb.footballprojpostgres.data.model.Player;
 import com.ium.tweb.footballprojpostgres.exception.ClubNotFoundException;
 import com.ium.tweb.footballprojpostgres.service.ClubService;
 import org.slf4j.Logger;
@@ -111,6 +112,16 @@ public class ClubController {
             return ResponseEntity.ok(clubs);
         }
         catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/search/name")
+    public ResponseEntity<List<Club>> searchClubsByName(@RequestParam String name) {
+        try {
+            List<Club> clubs = clubService.searchClubsByName(name);
+            return ResponseEntity.ok(clubs);
+        } catch (Exception e ) {
             return ResponseEntity.internalServerError().build();
         }
     }
