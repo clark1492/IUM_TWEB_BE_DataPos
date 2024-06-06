@@ -63,7 +63,7 @@ public class PlayerController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{playerId}")
     public ResponseEntity<Player> deletePlayer(@PathVariable Integer playerId) {
         try {
             Player player = playerService.deletePlayer(playerId);
@@ -106,8 +106,16 @@ public class PlayerController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
-
+    @GetMapping("/search/name/position")
+    public ResponseEntity<List<Player>> searchPlayersByNamePosition(@RequestParam(required = false, defaultValue = "") String name,
+                                                                    @RequestParam(required = false, defaultValue = "") String position) {
+        try {
+            List<Player> players = playerService.searchPlayersByNamePosition(name,position);
+            return ResponseEntity.ok(players);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
 
 /*https://spring.io/guides/tutorials/rest*/

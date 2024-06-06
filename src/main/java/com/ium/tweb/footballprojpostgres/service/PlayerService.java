@@ -65,4 +65,22 @@ public interface PlayerService {
      * @return List of players with the given name.
      */
     List<Player> searchPlayersByName(String name);
+
+    // Search players by position
+    /**
+     * Search players by position.
+     * @param position Position of the player.
+     * @return List of players with the given position.
+     */
+    List<Player> searchPlayerByPosition(String position);
+
+
+    // Search players by name and position
+    /**
+     * Search players by name and position.
+     * @param name Name of the player.
+     * @param position Position of the player.
+     * @return List of players with the given name and the given position.
+     */
+    List<Player> searchPlayersByNamePosition(String name, String position);
 }

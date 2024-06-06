@@ -96,10 +96,27 @@ public class PlayerServiceImpl implements PlayerService {
         playerRepository.delete(player);
         return player;
     }
-
     @Override
     public List<Player> searchPlayersByName(String name) {
         Pageable page = PageRequest.of(0, 10);
         return playerRepository.findByNameContainingIgnoreCaseOrderByName(name, page);
+    }
+    @Override
+    public List<Player> searchPlayerByPosition(String position) {
+        Pageable page = PageRequest.of(0, 10);
+        return playerRepository.findByPosition(position, page);
+    }
+    @Override
+    public List<Player> searchPlayersByNamePosition(String name, String position){
+        Pageable page = PageRequest.of(0, 10);
+        if(!name.isEmpty() && position.isEmpty()){
+            return this.searchPlayersByName(name);
+        }
+        else if (name.isEmpty() && !position.isEmpty()){
+            return this.searchPlayerByPosition(position);
+        }
+        else {
+            return playerRepository.findByPositionAndNameContainingIgnoreCaseOrderByName(name, position, page);
+        }
     }
 }
