@@ -48,5 +48,6 @@ public interface ClubRepository extends JpaRepository<Club, Integer> {
 
     List<Club> findByNameContainingIgnoreCaseOrderByName(String name,Pageable pageable);
 
+    List<Club> findByClubIdIn(List<Integer> clubIds);
 }
 

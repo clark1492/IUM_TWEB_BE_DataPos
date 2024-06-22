@@ -60,11 +60,18 @@ public interface ClubService {
      */
     Club updateClub(Integer clubId, Club club) throws ClubNotFoundException;
 
-    // Search clubs by name
     /**
      * Search clubs by name.
      * @param name Name of the club.
      * @return List of clubs with the given name.
      */
     List<Club> searchClubsByName(String name);
+
+    /**
+     * Search clubs by ClubIds.
+     * @param clubIds List of clubIds.
+     * @return List of clubs with the given name.
+     */
+    List<Club> searchClubsByClubIds(List<Integer> clubIds);
+
 }

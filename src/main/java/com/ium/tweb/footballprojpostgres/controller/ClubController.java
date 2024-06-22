@@ -126,5 +126,17 @@ public class ClubController {
         }
     }
 
+    // Search by a list of club IDs
+    @GetMapping("/search/clubIds")
+    public ResponseEntity<List<Club>> searchClubsByClubIds(@RequestParam List<Integer> clubIds) {
+        try {
+            List<Club> clubs = clubService.searchClubsByClubIds(clubIds);
+            return ResponseEntity.ok(clubs);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
 }
 
