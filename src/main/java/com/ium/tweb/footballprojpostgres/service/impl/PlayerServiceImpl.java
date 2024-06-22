@@ -97,23 +97,23 @@ public class PlayerServiceImpl implements PlayerService {
         return player;
     }
     @Override
-    public List<Player> searchPlayersByName(String name) {
-        Pageable page = PageRequest.of(0, 10);
+    public List<Player> searchPlayersByName(String name, Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
         return playerRepository.findByNameContainingIgnoreCaseOrderByName(name, page);
     }
     @Override
-    public List<Player> searchPlayerByPosition(String position) {
-        Pageable page = PageRequest.of(0, 10);
+    public List<Player> searchPlayerByPosition(String position, Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
         return playerRepository.findByPosition(position, page);
     }
     @Override
-    public List<Player> searchPlayersByNamePosition(String name, String position){
-        Pageable page = PageRequest.of(0, 10);
+    public List<Player> searchPlayersByNamePosition(String name, String position, Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
         if(!name.isEmpty() && position.isEmpty()){
-            return this.searchPlayersByName(name);
+            return this.searchPlayersByName(name, pageSize, pageNumber);
         }
         else if (name.isEmpty() && !position.isEmpty()){
-            return this.searchPlayerByPosition(position);
+            return this.searchPlayerByPosition(position, pageSize, pageNumber);
         }
         else {
             return playerRepository.findByPositionAndNameContainingIgnoreCaseOrderByName(name, position, page);
