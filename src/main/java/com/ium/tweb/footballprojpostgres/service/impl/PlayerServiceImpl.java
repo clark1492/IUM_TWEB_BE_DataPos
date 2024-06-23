@@ -130,8 +130,8 @@ public class PlayerServiceImpl implements PlayerService {
             return this.searchPlayerByPosition(position, pageSize, pageNumber);
         }
         else if(position.isEmpty()){
-            return playerRepository.findByPlayerIdIn(playerIds, page);
+            return playerRepository.findByPlayerIdInOrderByName(playerIds, page);
         }
-        return playerRepository.findByPlayerIdInAndPosition(playerIds, position, page);
+        return playerRepository.findByPlayerIdInAndPositionOrderByName(playerIds, position, page);
     }
 }

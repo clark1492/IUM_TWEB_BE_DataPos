@@ -19,6 +19,10 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
     List<Player> findByPlayerIdIn(List<Integer> playerIds, Pageable pageable);
 
+    List<Player> findByPlayerIdInOrderByName(List<Integer> playerIds, Pageable pageable);
+
     List<Player> findByPlayerIdInAndPosition(List<Integer> playerIds, String position, Pageable pageable);
+
+    List<Player> findByPlayerIdInAndPositionOrderByName(List<Integer> playerIds, String position, Pageable pageable);
 
 }
