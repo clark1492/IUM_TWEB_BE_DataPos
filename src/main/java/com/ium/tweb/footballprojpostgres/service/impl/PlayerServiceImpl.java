@@ -116,7 +116,7 @@ public class PlayerServiceImpl implements PlayerService {
             return this.searchPlayerByPosition(position, pageSize, pageNumber);
         }
         else {
-            return playerRepository.findByPositionAndNameContainingIgnoreCaseOrderByName(name, position, page);
+            return playerRepository.findByPositionAndNameContainingIgnoreCaseOrderByName(position, name, page);
         }
     }
 }
