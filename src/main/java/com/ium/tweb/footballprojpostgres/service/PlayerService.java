@@ -89,4 +89,15 @@ public interface PlayerService {
      * @return List of players with the given name and the given position.
      */
     List<Player> searchPlayersByNamePosition(String name, String position, Integer pageSize, Integer pageNumber);
+
+    /**
+     * Search players by playerIds and position.
+     * @param playerIds List of playerIds.
+     * @param position Position of the player.
+     * @param pageSize Number of players per page.
+     * @param pageNumber Page number.
+     * @return List of players with the given playerIds and the given position.
+     */
+    List<Player> searchPlayersByPlayerIdsAndPos(List<Integer> playerIds, String position, Integer pageSize, Integer pageNumber);
+
 }

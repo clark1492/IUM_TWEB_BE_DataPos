@@ -119,4 +119,19 @@ public class PlayerServiceImpl implements PlayerService {
             return playerRepository.findByPositionAndNameContainingIgnoreCaseOrderByName(position, name, page);
         }
     }
+
+    @Override
+    public List<Player> searchPlayersByPlayerIdsAndPos(List<Integer> playerIds, String position, Integer pageSize, Integer pageNumber){
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        if(playerIds.isEmpty() && position.isEmpty()){
+            return this.getAllPlayersWithPagination(pageSize, pageNumber);
+        }
+        else if(playerIds.isEmpty()){
+            return this.searchPlayerByPosition(position, pageSize, pageNumber);
+        }
+        else if(position.isEmpty()){
+            return playerRepository.findByPlayerIdIn(playerIds, page);
+        }
+        return playerRepository.findByPlayerIdInAndPosition(playerIds, position, page);
+    }
 }

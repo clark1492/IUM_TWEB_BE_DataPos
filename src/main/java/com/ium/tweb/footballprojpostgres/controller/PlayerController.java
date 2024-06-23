@@ -120,6 +120,19 @@ public class PlayerController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/search/playerIds")
+    public ResponseEntity<List<Player>> searchPlayersByPayerIds(@RequestParam List<Integer> playerIds,
+                                                                    @RequestParam(required = false, defaultValue = "") String position,
+                                                                    @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+        try {
+            List<Player> players = playerService.searchPlayersByPlayerIdsAndPos(playerIds,position,pageSize,pageNumber);
+            return ResponseEntity.ok(players);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
 
 /*https://spring.io/guides/tutorials/rest*/
