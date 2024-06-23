@@ -63,9 +63,11 @@ public interface ClubService {
     /**
      * Search clubs by name.
      * @param name Name of the club.
+     * @param pageSize Number of clubs per page.
+     * @param pageNumber Page number.
      * @return List of clubs with the given name.
      */
-    List<Club> searchClubsByName(String name);
+    List<Club> searchClubsByName(String name, Integer pageSize, Integer pageNumber);
 
     /**
      * Search clubs by ClubIds.

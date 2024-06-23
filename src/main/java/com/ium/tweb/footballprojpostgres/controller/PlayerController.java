@@ -122,7 +122,7 @@ public class PlayerController {
     }
 
     @GetMapping("/search/playerIds")
-    public ResponseEntity<List<Player>> searchPlayersByPayerIds(@RequestParam List<Integer> playerIds,
+    public ResponseEntity<List<Player>> searchPlayersByPayerIds(@RequestParam(required = false, defaultValue = "") List<Integer> playerIds,
                                                                     @RequestParam(required = false, defaultValue = "") String position,
                                                                     @RequestParam(required = false, defaultValue = "25") Integer pageSize,
                                                                     @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {

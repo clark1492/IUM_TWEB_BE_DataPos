@@ -117,14 +117,16 @@ public class ClubController {
     }
 
     @GetMapping("/search/name")
-    public ResponseEntity<List<Club>> searchClubsByName(@RequestParam String name) {
-        try {
-            List<Club> clubs = clubService.searchClubsByName(name);
+    public ResponseEntity<List<Club>> searchClubsByName(@RequestParam(required = false, defaultValue = "") String name,
+                                                         @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                         @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+       try {
+            List<Club> clubs = clubService.searchClubsByName(name, pageSize, pageNumber);
             return ResponseEntity.ok(clubs);
-        } catch (Exception e ) {
+          } catch (Exception e ) {
             return ResponseEntity.internalServerError().build();
-        }
-    }
+          }
+     }
 
     // Search by a list of club IDs
     @GetMapping("/search/clubIds")

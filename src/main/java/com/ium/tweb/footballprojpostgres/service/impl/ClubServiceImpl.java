@@ -91,7 +91,7 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public List<Club> searchClubsByName(String name) {
+    public List<Club> searchClubsByName(String name, Integer pageSize, Integer pageNumber) {
         Pageable page = PageRequest.of(0, 10);
         return clubRepository.findByNameContainingIgnoreCaseOrderByName(name,page);
     }

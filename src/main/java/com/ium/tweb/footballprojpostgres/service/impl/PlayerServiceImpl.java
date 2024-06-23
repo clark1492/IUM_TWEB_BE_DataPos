@@ -109,10 +109,13 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<Player> searchPlayersByNamePosition(String name, String position, Integer pageSize, Integer pageNumber) {
         Pageable page = PageRequest.of(pageNumber, pageSize);
-        if(!name.isEmpty() && position.isEmpty()){
+        if(name.isEmpty() && position.isEmpty()){
+            return this.getAllPlayersWithPagination(pageSize, pageNumber);
+        }
+        else if(!name.isEmpty() && position.isEmpty()){
             return this.searchPlayersByName(name, pageSize, pageNumber);
         }
-        else if (name.isEmpty() && !position.isEmpty()){
+        else if (name.isEmpty()){
             return this.searchPlayerByPosition(position, pageSize, pageNumber);
         }
         else {
