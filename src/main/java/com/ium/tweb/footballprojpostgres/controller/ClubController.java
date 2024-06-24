@@ -118,7 +118,7 @@ public class ClubController {
 
     @GetMapping("/search/name")
     public ResponseEntity<List<Club>> searchClubsByName(@RequestParam(required = false, defaultValue = "") String name,
-                                                         @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                         @RequestParam(required = false, defaultValue = "15") Integer pageSize,
                                                          @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
        try {
             List<Club> clubs = clubService.searchClubsByName(name, pageSize, pageNumber);
