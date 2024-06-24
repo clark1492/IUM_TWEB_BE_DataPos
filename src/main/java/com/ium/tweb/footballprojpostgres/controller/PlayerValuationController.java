@@ -71,6 +71,22 @@ public class PlayerValuationController {
         }
     }
 
+    @GetMapping("/info/player/{playerId}")
+    public ResponseEntity<List<PlayerValuationDTO>> getPlayerValuationsInfoByPlayerId(@PathVariable Integer playerId,
+                                                                                      @RequestParam(required = false, defaultValue = "1950-01-01") LocalDate startDate,
+                                                                                      @RequestParam(required = false, defaultValue = "3000-12-12") LocalDate endDate,
+                                                                                      @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+
+        try {
+            List<PlayerValuationDTO> playerValuationDTOS = playerValuationService.getPlayerValuationsAndInfoByPlayerIdAndDates(playerId, startDate, endDate, pageSize, pageNumber);
+            return ResponseEntity.ok(playerValuationDTOS);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
     @DeleteMapping("/player/{playerId}/date/{date}")
     public ResponseEntity<PlayerValuation> deletePlayerValuationsByPlayerId(@PathVariable Integer playerId, @PathVariable LocalDate date){
 

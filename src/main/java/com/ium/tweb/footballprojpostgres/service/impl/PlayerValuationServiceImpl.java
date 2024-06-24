@@ -95,6 +95,30 @@ public class PlayerValuationServiceImpl implements PlayerValuationService {
     }
 
     @Override
+    public List<PlayerValuationDTO> getPlayerValuationsAndInfoByPlayerId(Integer playerId, Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        List<Object[]> results = playerValuationRepository.findAllValuationsWithPlayerInfoByPlayerId(playerId, page);
+        return results.stream().map(result -> {
+            PlayerValuation pv = (PlayerValuation) result[0];
+            Player p = (Player) result[1];
+            Club c = (Club) result[2];
+            return new PlayerValuationDTO(pv, p, c);
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PlayerValuationDTO> getPlayerValuationsAndInfoByPlayerIdAndDates(Integer playerId, LocalDate startDate, LocalDate endDate, Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        List<Object[]> results = playerValuationRepository.findAllValuationsWithPlayerInfoByPlayerIdAndDates(playerId, startDate, endDate, page);
+        return results.stream().map(result -> {
+            PlayerValuation pv = (PlayerValuation) result[0];
+            Player p = (Player) result[1];
+            Club c = (Club) result[2];
+            return new PlayerValuationDTO(pv, p, c);
+        }).collect(Collectors.toList());
+    }
+
+    @Override
     public List<PlayerValuation> getAllPlayerValuationsWithPagination(Integer pageSize, Integer pageNumber) {
         Pageable page = PageRequest.of(pageNumber, pageSize);
         return playerValuationRepository.findAll(page).getContent();
