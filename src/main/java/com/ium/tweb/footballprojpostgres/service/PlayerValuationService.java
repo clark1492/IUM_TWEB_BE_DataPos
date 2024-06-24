@@ -1,6 +1,7 @@
 package com.ium.tweb.footballprojpostgres.service;
 
 import com.ium.tweb.footballprojpostgres.data.model.PlayerValuation;
+import com.ium.tweb.footballprojpostgres.data.output.PlayerValuationDTO;
 import com.ium.tweb.footballprojpostgres.exception.PlayerValuationNotFoundException;
 
 import java.time.LocalDate;
@@ -47,9 +48,16 @@ public interface PlayerValuationService {
     /**
      * Get player valuations by club ID.
      * @param clubId ID of the club.
-     * @return List of player valuations with the given ID.
+     * @return List of player valuations with the given Club ID.
      */
     List<PlayerValuation> getPlayerValuationsByClubId(Integer clubId);
+
+    /**
+     * Get player valuations and player info (i.e. name) by club ID.
+     * @param clubId ID of the club.
+     * @return List of player valuations merged with player Info for the given Club ID.
+     */
+    List<PlayerValuationDTO> getPlayerValuationsAndInfoByClubId(Integer clubId, Integer pageSize, Integer pageNumber);
 
     /**
      * Get all player valuations with pagination.

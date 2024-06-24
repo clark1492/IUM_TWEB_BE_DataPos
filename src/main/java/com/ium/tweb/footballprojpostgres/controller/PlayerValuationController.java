@@ -1,6 +1,7 @@
 package com.ium.tweb.footballprojpostgres.controller;
 
 import com.ium.tweb.footballprojpostgres.data.model.PlayerValuation;
+import com.ium.tweb.footballprojpostgres.data.output.PlayerValuationDTO;
 import com.ium.tweb.footballprojpostgres.exception.PlayerValuationNotFoundException;
 import com.ium.tweb.footballprojpostgres.service.PlayerValuationService;
 import org.slf4j.Logger;
@@ -110,6 +111,19 @@ public class PlayerValuationController {
         try {
             List<PlayerValuation> playerValuation = playerValuationService.getPlayerValuationsByClubId(clubId);
             return ResponseEntity.ok(playerValuation);
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
+    @GetMapping("info/club/{clubId}")
+    public ResponseEntity<List<PlayerValuationDTO>> getPlayerValuationsInfoByClubId(@PathVariable Integer clubId, @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber){
+
+        try {
+            List<PlayerValuationDTO> playerValuationDTOS = playerValuationService.getPlayerValuationsAndInfoByClubId(clubId, pageSize, pageNumber);
+            return ResponseEntity.ok(playerValuationDTOS);
         } catch (Exception e){
             return ResponseEntity.internalServerError().build();
 

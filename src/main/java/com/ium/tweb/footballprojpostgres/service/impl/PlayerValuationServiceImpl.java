@@ -1,6 +1,9 @@
 package com.ium.tweb.footballprojpostgres.service.impl;
 
+import com.ium.tweb.footballprojpostgres.data.model.Club;
+import com.ium.tweb.footballprojpostgres.data.model.Player;
 import com.ium.tweb.footballprojpostgres.data.model.PlayerValuation;
+import com.ium.tweb.footballprojpostgres.data.output.PlayerValuationDTO;
 import com.ium.tweb.footballprojpostgres.exception.PlayerValuationNotFoundException;
 import com.ium.tweb.footballprojpostgres.repository.PlayerValuationRepository;
 import com.ium.tweb.footballprojpostgres.service.PlayerValuationService;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PlayerValuationServiceImpl implements PlayerValuationService {
@@ -76,6 +80,18 @@ public class PlayerValuationServiceImpl implements PlayerValuationService {
     @Override
     public List<PlayerValuation> getPlayerValuationsByClubId(Integer clubId) {
        return playerValuationRepository.findByCurrentClubId(clubId);
+    }
+
+    @Override
+    public List<PlayerValuationDTO> getPlayerValuationsAndInfoByClubId(Integer clubId, Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        List<Object[]> results = playerValuationRepository.findAllValuationsWithPlayerInfoByClubId(clubId, page);
+        return results.stream().map(result -> {
+            PlayerValuation pv = (PlayerValuation) result[0];
+            Player p = (Player) result[1];
+            Club c = (Club) result[2];
+            return new PlayerValuationDTO(pv, p, c);
+        }).collect(Collectors.toList());
     }
 
     @Override
