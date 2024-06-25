@@ -42,4 +42,11 @@ public interface PlayerValuationRepository extends JpaRepository<PlayerValuation
             "WHERE p.playerId = :playerId AND pv.id.date BETWEEN :startDate AND :endDate")
     List<Object[]> findAllValuationsWithPlayerInfoByPlayerIdAndDates(@Param("playerId") Integer playerId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, Pageable pageable);
 
+    @Query("SELECT pv, p, c FROM PlayerValuation pv " +
+            "JOIN Player p ON pv.id.playerId = p.playerId " +
+            "JOIN Club c ON p.currentClubId = c.clubId " +
+            "WHERE pv.id.date BETWEEN :startDate AND :endDate " +
+            "ORDER BY pv.marketValueInEur DESC")
+    List<Object[]> findTopValuationsWithPlayerInfoByDates(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, Pageable pageable);
+
 }

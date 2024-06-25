@@ -63,6 +63,8 @@ public interface PlayerValuationService {
 
     List<PlayerValuationDTO> getPlayerValuationsAndInfoByPlayerIdAndDates(Integer playerId, LocalDate startDate, LocalDate endDate, Integer pageSize, Integer pageNumber);
 
+    List<PlayerValuationDTO> getTopValuationsAndInfoByDates(LocalDate startDate, LocalDate endDate, Integer pageSize, Integer pageNumber);
+
     /**
      * Get all player valuations with pagination.
      * @param pageSize Number of player valuations per page.
