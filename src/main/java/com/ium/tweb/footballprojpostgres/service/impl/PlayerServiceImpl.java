@@ -96,5 +96,45 @@ public class PlayerServiceImpl implements PlayerService {
         playerRepository.delete(player);
         return player;
     }
+    @Override
+    public List<Player> searchPlayersByName(String name, Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        return playerRepository.findByNameContainingIgnoreCaseOrderByName(name, page);
+    }
+    @Override
+    public List<Player> searchPlayerByPosition(String position, Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        return playerRepository.findByPosition(position, page);
+    }
+    @Override
+    public List<Player> searchPlayersByNamePosition(String name, String position, Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        if(name.isEmpty() && position.isEmpty()){
+            return this.getAllPlayersWithPagination(pageSize, pageNumber);
+        }
+        else if(!name.isEmpty() && position.isEmpty()){
+            return this.searchPlayersByName(name, pageSize, pageNumber);
+        }
+        else if (name.isEmpty()){
+            return this.searchPlayerByPosition(position, pageSize, pageNumber);
+        }
+        else {
+            return playerRepository.findByPositionAndNameContainingIgnoreCaseOrderByName(position, name, page);
+        }
+    }
 
+    @Override
+    public List<Player> searchPlayersByPlayerIdsAndPos(List<Integer> playerIds, String position, Integer pageSize, Integer pageNumber){
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        if(playerIds.isEmpty() && position.isEmpty()){
+            return this.getAllPlayersWithPagination(pageSize, pageNumber);
+        }
+        else if(playerIds.isEmpty()){
+            return this.searchPlayerByPosition(position, pageSize, pageNumber);
+        }
+        else if(position.isEmpty()){
+            return playerRepository.findByPlayerIdInOrderByName(playerIds, page);
+        }
+        return playerRepository.findByPlayerIdInAndPositionOrderByName(playerIds, position, page);
+    }
 }

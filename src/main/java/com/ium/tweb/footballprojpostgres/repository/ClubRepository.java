@@ -1,6 +1,8 @@
 package com.ium.tweb.footballprojpostgres.repository;
 
 import com.ium.tweb.footballprojpostgres.data.model.Club;
+import com.ium.tweb.footballprojpostgres.data.model.Player;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -42,5 +44,10 @@ public interface ClubRepository extends JpaRepository<Club, Integer> {
     // Find clubs by club code containing a certain string
     List<Club> findByClubCodeContaining(String code);
 
+    List<Club> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
+    List<Club> findByNameContainingIgnoreCaseOrderByName(String name,Pageable pageable);
+
+    List<Club> findByClubIdIn(List<Integer> clubIds);
 }
 

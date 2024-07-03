@@ -57,4 +57,47 @@ public interface PlayerService {
      * @return Deleted player.
      */
     Player deletePlayer(Integer playerId) throws PlayerNotFoundException;
+
+    // Search players by name
+    /**
+     * Search players by name.
+     * @param name Name of the player.
+     * @param pageSize Number of players per page.
+     * @param pageNumber Page number.
+     * @return List of players with the given name.
+     */
+    List<Player> searchPlayersByName(String name, Integer pageSize, Integer pageNumber);
+
+    // Search players by position
+    /**
+     * Search players by position.
+     * @param position Position of the player.
+     * @param pageSize Number of players per page.
+     * @param pageNumber Page number.
+     * @return List of players with the given position.
+     */
+    List<Player> searchPlayerByPosition(String position, Integer pageSize, Integer pageNumber);
+
+
+    // Search players by name and position
+    /**
+     * Search players by name and position.
+     * @param name Name of the player.
+     * @param position Position of the player.
+     * @param pageSize Number of players per page.
+     * @param pageNumber Page number.
+     * @return List of players with the given name and the given position.
+     */
+    List<Player> searchPlayersByNamePosition(String name, String position, Integer pageSize, Integer pageNumber);
+
+    /**
+     * Search players by playerIds and position.
+     * @param playerIds List of playerIds.
+     * @param position Position of the player.
+     * @param pageSize Number of players per page.
+     * @param pageNumber Page number.
+     * @return List of players with the given playerIds and the given position.
+     */
+    List<Player> searchPlayersByPlayerIdsAndPos(List<Integer> playerIds, String position, Integer pageSize, Integer pageNumber);
+
 }

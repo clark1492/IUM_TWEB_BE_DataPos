@@ -1,6 +1,7 @@
 package com.ium.tweb.footballprojpostgres.controller;
 
 import com.ium.tweb.footballprojpostgres.data.model.PlayerValuation;
+import com.ium.tweb.footballprojpostgres.data.output.PlayerValuationDTO;
 import com.ium.tweb.footballprojpostgres.exception.PlayerValuationNotFoundException;
 import com.ium.tweb.footballprojpostgres.service.PlayerValuationService;
 import org.slf4j.Logger;
@@ -70,6 +71,22 @@ public class PlayerValuationController {
         }
     }
 
+    @GetMapping("/info/player/{playerId}")
+    public ResponseEntity<List<PlayerValuationDTO>> getPlayerValuationsInfoByPlayerId(@PathVariable Integer playerId,
+                                                                                      @RequestParam(required = false, defaultValue = "1950-01-01") LocalDate startDate,
+                                                                                      @RequestParam(required = false, defaultValue = "3000-12-12") LocalDate endDate,
+                                                                                      @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+
+        try {
+            List<PlayerValuationDTO> playerValuationDTOS = playerValuationService.getPlayerValuationsAndInfoByPlayerIdAndDates(playerId, startDate, endDate, pageSize, pageNumber);
+            return ResponseEntity.ok(playerValuationDTOS);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
     @DeleteMapping("/player/{playerId}/date/{date}")
     public ResponseEntity<PlayerValuation> deletePlayerValuationsByPlayerId(@PathVariable Integer playerId, @PathVariable LocalDate date){
 
@@ -110,6 +127,34 @@ public class PlayerValuationController {
         try {
             List<PlayerValuation> playerValuation = playerValuationService.getPlayerValuationsByClubId(clubId);
             return ResponseEntity.ok(playerValuation);
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
+    @GetMapping("info/club/{clubId}")
+    public ResponseEntity<List<PlayerValuationDTO>> getPlayerValuationsInfoByClubId(@PathVariable Integer clubId, @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                                   @RequestParam(required = false, defaultValue = "0") Integer pageNumber){
+
+        try {
+            List<PlayerValuationDTO> playerValuationDTOS = playerValuationService.getPlayerValuationsAndInfoByClubId(clubId, pageSize, pageNumber);
+            return ResponseEntity.ok(playerValuationDTOS);
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+
+        }
+    }
+
+    @GetMapping("info/top/page")
+    public ResponseEntity<List<PlayerValuationDTO>> getTopPlayerValuationsInfoByDates(@RequestParam(required = false, defaultValue = "1950-01-01") LocalDate startDate,
+                                                                                      @RequestParam(required = false, defaultValue = "3000-12-12") LocalDate endDate,
+                                                                                      @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                                      @RequestParam(required = false, defaultValue = "0") Integer pageNumber){
+
+        try {
+            List<PlayerValuationDTO> playerValuationDTOS = playerValuationService.getTopValuationsAndInfoByDates(startDate, endDate,pageSize, pageNumber);
+            return ResponseEntity.ok(playerValuationDTOS);
         } catch (Exception e){
             return ResponseEntity.internalServerError().build();
 

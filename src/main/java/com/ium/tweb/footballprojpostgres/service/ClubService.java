@@ -1,6 +1,7 @@
 package com.ium.tweb.footballprojpostgres.service;
 
 import com.ium.tweb.footballprojpostgres.data.model.Club;
+import com.ium.tweb.footballprojpostgres.data.model.Player;
 import com.ium.tweb.footballprojpostgres.exception.ClubNotFoundException;
 
 import java.util.List;
@@ -58,4 +59,21 @@ public interface ClubService {
      * @return Club that was updated.
      */
     Club updateClub(Integer clubId, Club club) throws ClubNotFoundException;
+
+    /**
+     * Search clubs by name.
+     * @param name Name of the club.
+     * @param pageSize Number of clubs per page.
+     * @param pageNumber Page number.
+     * @return List of clubs with the given name.
+     */
+    List<Club> searchClubsByName(String name, Integer pageSize, Integer pageNumber);
+
+    /**
+     * Search clubs by ClubIds.
+     * @param clubIds List of clubIds.
+     * @return List of clubs with the given name.
+     */
+    List<Club> searchClubsByClubIds(List<Integer> clubIds);
+
 }

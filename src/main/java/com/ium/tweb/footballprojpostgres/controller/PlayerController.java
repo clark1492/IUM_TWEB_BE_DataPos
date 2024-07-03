@@ -63,7 +63,7 @@ public class PlayerController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{playerId}")
     public ResponseEntity<Player> deletePlayer(@PathVariable Integer playerId) {
         try {
             Player player = playerService.deletePlayer(playerId);
@@ -97,7 +97,42 @@ public class PlayerController {
         }
     }
 
+    @GetMapping("/search/name")
+    public ResponseEntity<List<Player>> searchPlayersByName(@RequestParam String name,
+                                                            @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                            @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+        try {
+            List<Player> players = playerService.searchPlayersByName(name, pageSize, pageNumber);
+            return ResponseEntity.ok(players);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    @GetMapping("/search/name/position")
+    public ResponseEntity<List<Player>> searchPlayersByNamePosition(@RequestParam(required = false, defaultValue = "") String name,
+                                                                    @RequestParam(required = false, defaultValue = "") String position,
+                                                                    @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+        try {
+            List<Player> players = playerService.searchPlayersByNamePosition(name,position,pageSize,pageNumber);
+            return ResponseEntity.ok(players);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
+    @GetMapping("/search/playerIds")
+    public ResponseEntity<List<Player>> searchPlayersByPayerIds(@RequestParam(required = false, defaultValue = "") List<Integer> playerIds,
+                                                                    @RequestParam(required = false, defaultValue = "") String position,
+                                                                    @RequestParam(required = false, defaultValue = "25") Integer pageSize,
+                                                                    @RequestParam(required = false, defaultValue = "0") Integer pageNumber) {
+        try {
+            List<Player> players = playerService.searchPlayersByPlayerIdsAndPos(playerIds,position,pageSize,pageNumber);
+            return ResponseEntity.ok(players);
+        } catch (Exception e ) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
 
 /*https://spring.io/guides/tutorials/rest*/

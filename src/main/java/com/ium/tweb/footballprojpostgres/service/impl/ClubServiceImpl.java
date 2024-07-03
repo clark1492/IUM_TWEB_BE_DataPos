@@ -1,12 +1,14 @@
 package com.ium.tweb.footballprojpostgres.service.impl;
 
 import com.ium.tweb.footballprojpostgres.data.model.Club;
+import com.ium.tweb.footballprojpostgres.data.model.Player;
 import com.ium.tweb.footballprojpostgres.exception.ClubNotFoundException;
 import com.ium.tweb.footballprojpostgres.repository.ClubRepository;
 import com.ium.tweb.footballprojpostgres.service.ClubService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -88,4 +90,13 @@ public class ClubServiceImpl implements ClubService {
         return clubRepository.save(clubToUpdate);
     }
 
+    @Override
+    public List<Club> searchClubsByName(String name, Integer pageSize, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        return clubRepository.findByNameContainingIgnoreCaseOrderByName(name,page);
+    }
+    @Override
+    public List<Club> searchClubsByClubIds(List<Integer> clubIds) {
+        return clubRepository.findByClubIdIn(clubIds);
+    }
 }
